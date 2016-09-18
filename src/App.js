@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import CountDownTime from './time';
+// import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <div className="page-container">
+        <div className="content-container">
+          <div className="status">
+            <div className="left">
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+            </div>
+            <div className="right">
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+              <div className="pomodoros"></div>
+            </div>
+          </div>
+          <div className="timer">
+            <CountDownTime />
+            <div className="button-container">
+              <button className="button">Start</button>
+            </div>
+          </div>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
     );
   }
