@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CountDownTime from './time';
+import CountDownTimer from './timer';
 // import logo from './logo.svg';
 import './App.css';
 
@@ -24,12 +24,7 @@ class App extends Component {
               <div className="pomodoros"></div>
             </div>
           </div>
-          <div className="timer">
-            <CountDownTime />
-            <div className="button-container">
-              <button className="button">Start</button>
-            </div>
-          </div>
+          < CountDownTimer />
         </div>
       </div>
     );
