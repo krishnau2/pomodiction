@@ -4,6 +4,16 @@ import CountDownTimer from './timer';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.pomodoroTime = '25:00';
+    this.pomodoroDuration = 25*60;
+    this.shortBreakTime = '05:00';
+    this.shortBreak = 5*60;
+    this.longBreakTime = '15:00';
+    this.longBreak = 15*60;
+  }
+
   render() {
     return (
       <div className="page-container">
@@ -24,7 +34,7 @@ class App extends Component {
               <div className="pomodoros"></div>
             </div>
           </div>
-          < CountDownTimer />
+          < CountDownTimer duration={this.longBreak} time={this.longBreakTime}/>
         </div>
       </div>
     );

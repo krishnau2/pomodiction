@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class CountDownTimer extends Component{
   constructor(props) {
     super(props);
-    this.state = {time: '25:00', 
+    this.state = {time: this.props.time,
                   status: 'start',
-                  timer: 25*60
+                  timer: this.props.duration
                 };
     this.clickHandler = this.clickHandler.bind(this);
   }
