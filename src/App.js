@@ -14,8 +14,8 @@ class App extends Component {
     this.longBreak = 15*60;
     this.state = {completedPomodors: 0,
                   currentTimer: 'pomodoro',
-                  duration: 10,
-                  time: '00:10'
+                  duration: this.pomodoroDuration,
+                  time: this.pomodoroTime
                 };
     this.handleTimerCompleted = this.handleTimerCompleted.bind(this);
   }
