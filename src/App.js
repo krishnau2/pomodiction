@@ -12,6 +12,34 @@ class App extends Component {
     this.shortBreak = 5*60;
     this.longBreakTime = '15:00';
     this.longBreak = 15*60;
+    this.state = {completedPomodors: 0,
+                  currentTimer: 'pomodoro',
+                  duration: 10,
+                  time: '00:10'
+                };
+    this.handleTimerCompleted = this.handleTimerCompleted.bind(this);
+  }
+
+  handleTimerCompleted(){
+    console.log('handleTimerCompleted is called.....');
+    var duration, time, currentTimer, completedPomodors;
+    if(this.state.currentTimer === 'pomodoro'){
+      completedPomodors = this.state.completedPomodors + 1;
+      duration = this.shortBreak;
+      time = this.shortBreakTime;
+      currentTimer = 'break'
+    }else{
+      completedPomodors = this.state.completedPomodors;
+      duration = this.pomodoroDuration;
+      time = this.pomodoroTime;
+      currentTimer = 'pomodoro'
+    }
+
+    this.setState({completedPomodors: completedPomodors,
+                    currentTimer: currentTimer,
+                    duration: duration,
+                    time: time
+                  });
   }
 
   render() {
@@ -34,7 +62,7 @@ class App extends Component {
               <div className="pomodoros"></div>
             </div>
           </div>
-          < CountDownTimer duration={this.longBreak} time={this.longBreakTime}/>
+          < CountDownTimer duration={this.state.duration} time={this.state.time} action={this.handleTimerCompleted}/>
         </div>
       </div>
     );

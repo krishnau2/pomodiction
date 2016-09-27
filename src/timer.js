@@ -10,6 +10,10 @@ class CountDownTimer extends Component{
     this.clickHandler = this.clickHandler.bind(this);
   }
 
+  timerCompleted(){
+    this.props.action();
+  }
+
   startTimer(duration) {
     var timer = duration, minutes, seconds, currentTime;
     var Intervald = setInterval(function () {
@@ -24,7 +28,12 @@ class CountDownTimer extends Component{
       this.setState({time: currentTime, status: 'running', timer: timer});
 
       if (--timer < 0) {
-          timer = duration;
+        this.timerCompleted();
+        this.setState({time: this.props.time,
+                        status: 'start',
+                        timer: this.props.duration
+                      });
+        timer = this.state.timer;
       }
     }.bind(this), 1000);
     return Intervald;
