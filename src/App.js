@@ -6,6 +6,10 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.pomodorMessage = "Break is over! Next Pomodoro started, lets finish one task..";
+    this.shortBreakMessage = "Pomodoro completed! Take a 5 min break.";
+    this.longBreakMessage = "You are doing exceptionaly well, your brain needs some rest, take a 15 min break."
+
     this.pomodoroTime = '25:00';
     this.pomodoroDuration = 25*60;
     this.shortBreakTime = '05:00';
@@ -22,26 +26,29 @@ class App extends Component {
 
   handleTimerCompleted(){
     console.log('handleTimerCompleted is called.....');
-    var duration, time, currentTimer, completedPomodors;
-    this.desktopNotification();
+    var duration, time, currentTimer, completedPomodors, message;
     if(this.state.currentTimer === 'pomodoro'){
       completedPomodors = this.state.completedPomodors + 1;
       if(completedPomodors % 4 === 0){
         duration = this.longBreak;
         time = this.longBreakTime;
-        currentTimer = 'break'
+        currentTimer = 'longBreak';
+        message = this.longBreakMessage;
       }else{
         duration = this.shortBreak;
         time = this.shortBreakTime;
-        currentTimer = 'break'
+        currentTimer = 'shortBreak'
+        message = this.shortBreakMessage;
       }
     }else{
       completedPomodors = this.state.completedPomodors;
       duration = this.pomodoroDuration;
       time = this.pomodoroTime;
       currentTimer = 'pomodoro'
+      message = this.pomodorMessage;
     }
 
+    this.desktopNotification(message);
     this.setState({completedPomodors: completedPomodors,
                     currentTimer: currentTimer,
                     duration: duration,
@@ -49,12 +56,7 @@ class App extends Component {
                   });
   }
 
-  desktopNotification(){
-    // // request permission on page load
-    // document.addEventListener('DOMContentLoaded', function () {
-    //   if (Notification.permission !== "granted")
-    //     Notification.requestPermission();
-    // });
+  desktopNotification(message){
     if (!Notification) {
       alert('Desktop notifications not available in your browser.');
       return;
@@ -63,9 +65,9 @@ class App extends Component {
     if (Notification.permission !== "granted")
       Notification.requestPermission();
     else {
-      var notification = new Notification('Notification title', {
+      var notification = new Notification('Pomodiction', {
         icon: logo,
-        body: "Hey there! You've been notified!",
+        body: message,
       });
       // notification.onclick = function () {
       //   window.open("http://stackoverflow.com/a/13328397/1269037");
