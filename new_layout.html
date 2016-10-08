@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="./src/favicon.ico">
+    <title>React App</title>
+    <style>
+      body{
+        font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+      }
+      .container{
+        /*width: 800px;*/
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .app-title{
+        width: 400px;
+        margin-top: 50px;                
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .app-title__name{
+        width: 260px;
+        font-size: 50px;
+        font-weight: 100;
+        line-height: 1.3;
+        border-bottom: 1px solid rgba(237,234,237,0.68);
+        text-align: center;
+      }
+      .app-title__description{
+        width: 260px;
+        line-height: 2;
+        color: #b5b3b3;
+        text-align: center;
+      }
+      .timer-container{
+        width: 600px;
+        background-color: white;
+        height: 200px;
+        margin-top: 50px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
+        border:1px solid #f1efef;
+        background-color:#FFFFFF;
+
+        -webkit-box-shadow: 6px 6px 25px 5px rgba(237,234,237,0.68);
+        -moz-box-shadow: 6px 6px 25px 5px rgba(237,234,237,0.68);
+        box-shadow: 6px 6px 25px 5px rgba(237,234,237,0.68);
+      }
+      .pomodoro-status{
+        width: 560px;
+        height: 30px;
+        background-color: #bfbebe;
+        margin-top: 80px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+      }
+      .pomodoros{
+        width: 55px;
+        height: 30px;
+        background-color: #dedede;
+      }
+      .pomodoros--active{
+        background-color: #4CAF50; 
+      }
+      .pomodoro__break{
+        width: 1px;
+        background-color: #bfbebe;
+        align-self: flex-end;
+      }
+      .pomodoro__break--active{
+        background-color: red;
+        height: 70px;
+      }
+      .explanation{
+        width: 650px;
+        margin-top: 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .explanation__question{
+        font-weight: 500;
+        letter-spacing: 0.2px;
+        margin: 0;
+      }
+      .explanation__answer{
+        line-height: 1.4;
+        letter-spacing: 0.2px;
+        font-weight: 200;
+        margin-top: 15px;
+      }
+      .button-container{
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .button-container__button {
+        border: none;
+        color: white;
+        padding: 10px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .button-container__button--start{
+        background-color: #4CAF50;
+      }
+      .button-container__button--stop{
+        background-color: #e74c3c;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="app-title">
+        <div class="app-title__name">Pomodiction</div>
+        <div class="app-title__description">a simple pomodoro tracking app</div>
+      </div>
+      <div class="timer-container">
+        <div class="pomodoro-status">
+          <div class="pomodoros pomodoros--active"></div>
+          <div class="pomodoro__break pomodoro__break--active"></div>
+          <div class="pomodoros pomodoros--active"></div>
+          <div class="pomodoro__break pomodoro__break--active"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+          <div class="pomodoro__break"></div>
+          <div class="pomodoros"></div>
+        </div>
+        <div class="button-container">
+          <button class="button-container__button button-container__button--start">START</button>
+        </div>
+      </div>
+      <div class="explanation">
+        <p class="explanation__question">What is Pomodoro Technique?</p>
+        <p class="explanation__answer">
+          The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. These intervals are named pomodoros, the plural in English of the Italian word pomodoro (tomato), after the tomato-shaped kitchen timer that Cirillo used as a university student. The method is based on the idea that frequent breaks can improve mental agility.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
