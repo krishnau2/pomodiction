@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="./src/favicon.ico">
     <title>React App</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('permission checke.');
+        if (Notification.permission !== "granted")
+          Notification.requestPermission();
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
