@@ -8,7 +8,7 @@
     <title>React App</title>
     <style>      
       .container{
-        /*width: 800px;*/
+        width: 1100px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -39,12 +39,43 @@
       }
 
       .timer-container{
-        width: 760px;
-        height: 200px;
-        /*border: 1px solid;*/
+        position: absolute;
+        top: -42px;
+        left: 41px;
       }
+      .timer{
+        font-weight: 600;
+        color: #FFFFFF;
+        width: 60px;
+        height: 25px;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 0;
+      }
+      .timer-pomodoro{
+        background-color: #1D914E;
+      }
+      .timer-break{
+        background-color: #BF8D39;
+      }
+      .progress-indicator{
+        width: 2px;
+        height: 100px;
+        align-self: flex-end;
+      }
+      .progress-indicator-pomodoro{
+        background-color: #1D914E;
+      }
+      .progress-indicator-break{
+        background-color: #D89930;
+      }
+
+
       .pomodoro-container{
-        width: 760px;
+        width: 1000px;
         height: 70px;
         margin-top: 100px;
         border-radius: 50px;
@@ -54,17 +85,18 @@
         -webkit-box-shadow: 0px 0px 2px 1px #DEDEDE;
         -moz-box-shadow: 0px 0px 2px 1px #DEDEDE;
         box-shadow: 0px 0px 2px 1px #DEDEDE;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        position: relative;
       }
       .pomodoro{
         width: 70px;
         height: 45px;
         border: 1px solid #EEEEEE;
         background-color: #FAFAFA;
-        /*background-color: gray;*/
+        overflow: hidden;
         background-image: repeating-linear-gradient(45deg, #EEEEEE, transparent 1px, rgba(255,255,255,.5) 1px, rgba(255,255,255,.5) 5px);
+        float: left;
+        margin-top: 12px;
+        margin-right: 3px;
       }
       .pomodoro--completed{
         background-color: #27AE60;
@@ -78,43 +110,7 @@
         display: flex;
         justify-content: flex-end;
       }
-      .progress-indicator{
-        width: 2px;
-        height: 100px;
-        align-self: flex-end;
-      }
-      .progress-indicator-pomodoro{
-        background-color: #1D914E;
-      }
-      .progress-indicator-break{
-        background-color: #D89930; 
-      }
-      .timer{
-        font-weight: 600;
-        color: #FFFFFF;        
-        width: 60px;
-        height: 25px;
-        text-align: center;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-        position: absolute;
-        margin-top: -55px;
-      }
-      .timer-pomodoro{
-        background-color: #1D914E;
-      }
-      .timer-break{
-        background-color: #BF8D39; 
-      }
-      .pomodoro-short-break{
-        width: 15px;
-        height: 45px;
-        border: 1px solid #EEEEEE;
-        background-color: #FAFAFA;
-        background-image: repeating-linear-gradient(45deg, #EEEEEE, transparent 1px, rgba(255,255,255,.5) 1px, rgba(255,255,255,.5) 5px);
-      }
-      .pomodoro-break-in-progress{
+      .break-in-progress{
         width: 13px;
         height: 45px;
         background-color: #F5A623;
@@ -122,7 +118,13 @@
         display: flex;
         justify-content: flex-end;
       }
-      .pomodoro-break--completed{
+      .break--short{
+        width: 15px;
+      }
+      .break--long{
+        width: 30px;
+      }
+      .break--completed{
         background-color: #F5A623;
         background-image: none;
       }
@@ -201,50 +203,38 @@
         <div class="app-title__name">Pomodiction</div>
         <div class="app-title__description">a simple pomodoro tracking app</div>
       </div>
-
-      <div class="timer-container">        
-        <div class="pomodoro-container">
-          <div class="pomodoro pomodoro--left ">
-            <div class="pomodoro-in-progress">
-              <div class="timer timer-pomodoro">24:59</div>
-              <div class="progress-indicator progress-indicator-pomodoro"></div>
-            </div>
-          </div>
-          <div class="pomodoro-short-break pomodoro-break--completed"></div>
-          <div class="pomodoro pomodoro--completed"></div>
-          <div class="pomodoro-short-break"></div>
-          <div class="pomodoro">
-            <div class="pomodoro-in-progress">
-              <div class="timer timer-pomodoro">24:59</div>
-              <div class="progress-indicator progress-indicator-pomodoro"></div>
-            </div>
-          </div>
-          <div class="pomodoro-short-break">
-            <div class="pomodoro-break-in-progress">
-              <div class="timer timer-break">00:43</div>
-              <div class="progress-indicator progress-indicator-break"></div>
-            </div>
-          </div>
-          <div class="pomodoro"></div>
-          <div class="pomodoro-short-break"></div>
-          <div class="pomodoro"></div>
-          <div class="pomodoro-short-break"></div>
-          <div class="pomodoro"></div>
-          <div class="pomodoro-short-break"></div>
-          <div class="pomodoro"></div>
-          <div class="pomodoro-short-break"></div>
-          <div class="pomodoro pomodoro--right">
-            <div class="pomodoro-in-progress">
-              <div class="timer timer-pomodoro">24:59</div>
-              <div class="progress-indicator progress-indicator-pomodoro"></div>
-            </div>
-          </div>
+      <div class="pomodoro-container">
+        <div class="timer-container">
+          <div class="timer timer-pomodoro">24:59</div>
+          <div class="progress-indicator progress-indicator-pomodoro"></div>
         </div>
-        <div class="button-container">
-          <button class="button-container__button button-container__button--stop">STOP</button>
+
+        <div class="pomodoro pomodoro--left ">
+          <div class="pomodoro-in-progress"></div>
+        </div>
+        <div class="pomodoro break--short break--completed"></div>
+        <div class="pomodoro pomodoro--completed"></div>
+        <div class="pomodoro break--short"></div>
+        <div class="pomodoro"></div>
+        <div class="pomodoro break--short"></div>
+        <div class="pomodoro"></div>
+        <div class="pomodoro break--long"></div>
+        <div class="pomodoro"></div>
+        <div class="pomodoro break--short"></div>
+        <div class="pomodoro"></div>
+        <div class="pomodoro break--short"></div>
+        <div class="pomodoro"></div>
+        <div class="pomodoro break--short"></div>
+        <div class="pomodoro"></div>
+        <div class="pomodoro break--long"></div>
+        <div class="pomodoro"></div>
+        <div class="pomodoro break--short"></div>
+        <div class="pomodoro pomodoro--right">
         </div>
       </div>
-
+      <div class="button-container">
+        <button class="button-container__button button-container__button--stop">STOP</button>
+      </div>
       <div class="explanation">
         <p class="explanation__question">What is Pomodoro Technique?</p>
         <p class="explanation__answer">
