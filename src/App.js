@@ -17,8 +17,8 @@ class App extends Component {
     // this.longBreakTime = '15:00';
 
     this.pomodoroDuration = 25*60;
-    this.shortBreak = 5*60;
-    this.longBreak = 15*60;
+    this.shortBreakDuration = 5*60;
+    this.longBreakDuration = 15*60;
 
     this.baseLeft = 20;
     this.margin = 5;
@@ -30,19 +30,28 @@ class App extends Component {
     this.shortBreakRatio = 0.5;
     this.longBreakRation = 0.333;
 
-    this.state = {completedBlock: 0,
-                  currentTimer: 'pomodoro',
-                  duration: 25*60,
-                  displayTime: '25:00',
+    this.state = {completedBlock: 6,
                   timerLeft: this.baseLeft,
                   timerStartingPosition: 0,
                   progressbarLeft: 0
                 };
+    // this.timerLeft = this.baseLeft + this.timerStartingPosition();
     // this.handleTimerCompleted = this.handleTimerCompleted.bind(this);
 
     // TODO
     // Need to handle this with the START button click.
-    this.intervalId = this.startTimer(this.state.duration);
+    this.intervalId = this.startTimer(this.pomodoroDuration);
+    // this.intervalId = this.startTimer(this.shortBreakDuration);
+  }
+
+  // This will set the correct postion of Timer before component mount.
+  componentWillMount() {
+    this.setState({timerStartingPosition: this.timerStartingPosition()})
+  }
+
+  blockType(blockNumber) {
+    let block = new Block();
+    return(block.blockType(blockNumber));
   }
 
   startTimer(duration) {
@@ -64,19 +73,30 @@ class App extends Component {
 
       if (--duration < 0) {
         this.timerCompleted();
-        // this.setState({time: this.props.time,
-        //                 status: 'start',
-        //                 timer: this.props.duration
-        //               });
-        // timer = this.state.timer;
       }
+
     }.bind(this), 1000);
     return Intervald;
   }
 
+  nextDuration() {
+    // let block = new Block();
+    let blockType = this.blockType(this.state.completedBlock);
+    if( blockType === 'pomodoro'){
+      return this.pomodoroDuration;
+    }else if( blockType === 'break--short'){
+      return this.shortBreakDuration;
+    }else if( blockType === 'break--long'){
+      return this.longBreakDuration;
+    }
+  }
+
   timerCompleted() {
-    clearInterval(this.intervalId);
     // Call Desktop Notification here.
+    clearInterval(this.intervalId);
+    let newDuration = this.nextDuration();
+    this.setState({completedBlock: this.state.completedBlock + 1})
+    this.intervalId = this.startTimer(newDuration);
   }
 
   timerStartingPosition() {
@@ -86,8 +106,8 @@ class App extends Component {
       timerPosition = 0;
     }else{
       for(let i = 1; i <= this.state.completedBlock; i++){
-        let block = new Block();
-        let blockType = block.blockType(i)
+        // let block = new Block();
+        let blockType = this.blockType(i)
         if( blockType === 'pomodoro'){
           timerPosition += this.pomodoroBlockWidth;
         }else if( blockType === 'break--short'){
@@ -119,7 +139,7 @@ class App extends Component {
     if(timeDiff%10 === 0){
       return(this.baseLeft + this.state.timerStartingPosition + (this.pomodoroRatio * (timeDiff/10)));
     }else{
-      return this.state.timerLeft;
+      return this.timerLeft;
     }
   }
 
