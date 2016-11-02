@@ -1,50 +1,20 @@
 import React, { Component } from 'react';
+import Block from './block';
 
 class PomodoroBlock extends Component{
   constructor(props) {
     super(props);
-    this.completedBlock = this.props.completedBlock;
   }
 
   blockType(blockNumber) {
-    let type = '';
-    switch (blockNumber){
-      case 1:        
-      case 3:
-      case 5:
-      case 7:
-      case 9:
-      case 11:
-      case 13:
-      case 15:
-      case 17:
-      case 19:
-        type = 'pomodoro';
-        break;
-      case 2:
-      case 4:
-      case 6:
-      case 10:
-      case 12:
-      case 14:
-      case 18:
-        type = 'break--short';
-        break;
-      case 8:
-      case 16:
-        type = 'break--long';
-        break;
-      default:
-        type = type;
-        break;
-    }
-    return type;
+    let block = new Block();
+    return(block.blockType(blockNumber));
   }
 
   blockStatus(blockNumber){
-    if(blockNumber <= this.completedBlock){
+    if(blockNumber <= this.props.completedBlock){
       return('completed');
-    }else if(blockNumber === (this.completedBlock + 1)){
+    }else if(blockNumber === (this.props.completedBlock + 1)){
       return('inprogress');
     }else{
       return('emtpy');
