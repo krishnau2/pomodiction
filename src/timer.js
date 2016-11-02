@@ -1,68 +1,39 @@
 import React, { Component } from 'react';
+import Block from './block';
 
 class CountDownTimer extends Component{
   constructor(props) {
     super(props);
-    this.state = {time: this.props.time,
-                  status: 'start',
-                  timer: this.props.duration
-                };
-    this.clickHandler = this.clickHandler.bind(this);
+    this.state = {displayTime: this.props.displayTime };
   }
 
-  timerCompleted(){
-    this.props.action();
+  currentBlock() {
+    let block = new Block();
+    return(block.blockType(this.props.completedBlock + 1));
   }
 
-  startTimer(duration) {
-    var timer = duration, minutes, seconds, currentTime;
-    var Intervald = setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-
-      // display.text(minutes + ":" + seconds);
-      currentTime = minutes + ":" + seconds;
-      this.setState({time: currentTime, status: 'running', timer: timer});
-
-      if (--timer < 0) {
-        this.timerCompleted();
-        this.setState({time: this.props.time,
-                        status: 'start',
-                        timer: this.props.duration
-                      });
-        timer = this.state.timer;
-      }
-    }.bind(this), 1000);
-    return Intervald;
-  }
-
-  clickHandler() {
-    if(this.state.status === 'start' || this.state.status === 'paused'){
-      this.intervalId = this.startTimer(this.state.timer);
+  timerCssClass() {
+    if(this.currentBlock() === 'pomodoro'){
+      return 'timer timer-pomodoro';
     }else{
-      clearInterval(this.intervalId);
-      this.setState({time: this.state.time, status: 'paused', timer: this.state.timer});   
+      return 'timer timer-break';
     }
   }
 
-  buttonCaption() {
-    if(this.state.status === 'start' || this.state.status === 'paused'){
-      return "Start"
+  progressIndicatorCssClass(){
+   if(this.currentBlock() === 'pomodoro'){
+      return 'progress-indicator progress-indicator-pomodoro';
     }else{
-      return "Pause"
+      return 'progress-indicator progress-indicator-break';
     }
   }
+
 
   render(){
     return(
-      <div className="timer">
-        <div className="time"> {this.state.time} </div>
-        <div className="button-container">
-          <button className="button" onClick={this.clickHandler}>{this.buttonCaption()}</button>
-        </div>
+      <div className="timer-container" style={{left: this.props.timerLeft + 'px'}}>
+        <div className={this.timerCssClass()}>{this.props.displayTime}</div>
+        <div className={this.progressIndicatorCssClass()}></div>
       </div>
     );
   }
