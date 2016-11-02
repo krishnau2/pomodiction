@@ -30,7 +30,7 @@ class App extends Component {
     this.shortBreakRatio = 0.5;
     this.longBreakRation = 0.333;
 
-    this.state = {completedBlock: 6,
+    this.state = {completedBlock: 1,
                   timerLeft: this.baseLeft,
                   timerStartingPosition: 0,
                   progressbarLeft: 0
@@ -40,8 +40,8 @@ class App extends Component {
 
     // TODO
     // Need to handle this with the START button click.
-    this.intervalId = this.startTimer(this.pomodoroDuration);
-    // this.intervalId = this.startTimer(this.shortBreakDuration);
+    // this.intervalId = this.startTimer(this.pomodoroDuration);
+    this.intervalId = this.startTimer(this.shortBreakDuration);
   }
 
   // This will set the correct postion of Timer before component mount.
@@ -81,7 +81,7 @@ class App extends Component {
 
   nextDuration() {
     // let block = new Block();
-    let blockType = this.blockType(this.state.completedBlock);
+    let blockType = this.blockType(this.state.completedBlock+1);
     if( blockType === 'pomodoro'){
       return this.pomodoroDuration;
     }else if( blockType === 'break--short'){
@@ -94,8 +94,8 @@ class App extends Component {
   timerCompleted() {
     // Call Desktop Notification here.
     clearInterval(this.intervalId);
-    let newDuration = this.nextDuration();
     this.setState({completedBlock: this.state.completedBlock + 1})
+    let newDuration = this.nextDuration();
     this.intervalId = this.startTimer(newDuration);
   }
 
