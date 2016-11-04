@@ -15,9 +15,9 @@ class App extends Component {
 
     this.baseLeft = 20;
     this.margin = 5;
-    this.pomodoroBlockWidth = 70;
-    this.shortBreakBlockWidth = 15;
-    this.longBreakBlockWidth = 30;
+    this.pomodoroBlockWidth = 70.2;
+    this.shortBreakBlockWidth = 15.2;
+    this.longBreakBlockWidth = 30.2;
 
     this.pomodoroRatio = 0.466;
     this.shortBreakRatio = 0.5;
@@ -25,7 +25,7 @@ class App extends Component {
 
     this.state = {duration: this.pomodoroDuration,
                   status: 'initial',
-                  completedBlock: 7,
+                  completedBlock: 0,
                   timerLeft: this.baseLeft,
                   timerStartingPosition: 0,
                   progressbarLeft: 0
