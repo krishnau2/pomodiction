@@ -8,13 +8,6 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    // this.pomodorMessage = "Break is over! Next Pomodoro started, lets finish one task..";
-    // this.shortBreakMessage = "Pomodoro completed! Take a 5 min break.";
-    // this.longBreakMessage = "You are doing exceptionaly well, your brain needs some rest, take a 15 min break."
-
-    // this.pomodoroTime = '25:00';
-    // this.shortBreakTime = '05:00';
-    // this.longBreakTime = '15:00';
 
     this.pomodoroDuration = 25*60;
     this.shortBreakDuration = 5*60;
@@ -30,23 +23,39 @@ class App extends Component {
     this.shortBreakRatio = 0.5;
     this.longBreakRation = 0.333;
 
-    this.state = {completedBlock: 1,
+    this.state = {duration: this.pomodoroDuration,
+                  status: 'initial',
+                  completedBlock: 7,
                   timerLeft: this.baseLeft,
                   timerStartingPosition: 0,
                   progressbarLeft: 0
                 };
-    // this.timerLeft = this.baseLeft + this.timerStartingPosition();
-    // this.handleTimerCompleted = this.handleTimerCompleted.bind(this);
 
-    // TODO
-    // Need to handle this with the START button click.
-    // this.intervalId = this.startTimer(this.pomodoroDuration);
-    this.intervalId = this.startTimer(this.shortBreakDuration);
+    this.intervalId = null;
+    this.clickHandler = this.clickHandler.bind(this);
   }
 
-  // This will set the correct postion of Timer before component mount.
+  // This will set the correct postion of Timer before component renders.
   componentWillMount() {
-    this.setState({timerStartingPosition: this.timerStartingPosition()})
+    let timerStartingPosition = this.timerStartingPosition();
+    let timerLeft = this.baseLeft + timerStartingPosition;
+    let nextDuration = this.nextDuration();
+
+    this.setState({timerLeft: timerLeft,
+                  timerStartingPosition: timerStartingPosition,
+                  duration: nextDuration,
+                  displayTime: this.displayTime(nextDuration)
+                })
+  }
+
+  clickHandler(){
+    if(this.state.status === 'initial' || this.state.status === 'paused'){
+      this.intervalId = this.startTimer(this.state.duration);
+    }else{
+      clearInterval(this.intervalId);
+      this.setState({status: 'paused'});
+    }
+    console.log(this.intervalId);
   }
 
   blockType(blockNumber) {
@@ -54,20 +63,25 @@ class App extends Component {
     return(block.blockType(blockNumber));
   }
 
+  displayTime(duration) {
+    let minutes, seconds, displayTime;
+    minutes = parseInt(duration / 60, 10);
+    seconds = parseInt(duration % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    displayTime = minutes + ":" + seconds;
+    return displayTime;
+  }
+
   startTimer(duration) {
     // var timer = duration, minutes, seconds, currentTime;
     let initialDuration = duration;
     let minutes, seconds, displayTime;
     let Intervald = setInterval(function () {
-      minutes = parseInt(duration / 60, 10);
-      seconds = parseInt(duration % 60, 10);
 
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-
-      displayTime = minutes + ":" + seconds;
-
-      this.updateComponents({displayTime: displayTime,
+      this.updateComponents({displayTime: this.displayTime(duration),
                         initialDuration: initialDuration,
                         currentDuration: duration});
 
@@ -126,7 +140,9 @@ class App extends Component {
     let progressbarWidthValue = this.calculateProgressbarMovement(params);
     let timerPosition = this.timerStartingPosition();
 
-    this.setState({displayTime: params.displayTime,
+    this.setState({duration: params.currentDuration,
+                  status: 'running',
+                  displayTime: params.displayTime,
                   timerLeft: timerLeftValue,
                   progressbarLeft: progressbarWidthValue,
                   timerStartingPosition: timerPosition});
@@ -139,7 +155,7 @@ class App extends Component {
     if(timeDiff%10 === 0){
       return(this.baseLeft + this.state.timerStartingPosition + (this.pomodoroRatio * (timeDiff/10)));
     }else{
-      return this.timerLeft;
+      return this.state.timerLeft;
     }
   }
 
@@ -154,13 +170,6 @@ class App extends Component {
       return this.state.progressbarLeft;
     }
   }
-
-
-
-  // updateProgressbar(newLeft) {
-  //   console.log(newLeft);
-  //   this.setState({progressbarLeft: newLeft});
-  // }
 
   // handleTimerCompleted(){
   //   console.log('handleTimerCompleted is called.....');
@@ -186,35 +195,6 @@ class App extends Component {
   //     message = this.pomodorMessage;
   //   }
 
-  //   this.desktopNotification(message);
-  //   this.setState({completedPomodors: completedPomodors,
-  //                   currentTimer: currentTimer,
-  //                   duration: duration,
-  //                   time: time
-  //                 });
-  // }
-
-  // desktopNotification(message){
-  //   if (!Notification) {
-  //     alert('Desktop notifications not available in your browser.');
-  //     return;
-  //   }
-
-  //   if (Notification.permission !== "granted")
-  //     Notification.requestPermission();
-  //   else {
-  //     var notification = new Notification('Pomodiction', {
-  //       icon: logo,
-  //       body: message,
-  //     });
-  //     // notification.onclick = function () {
-  //     //   window.open("http://stackoverflow.com/a/13328397/1269037");
-  //     // };
-
-  //   }
-
-  // }
-
   render() {
     return (
       <div className="container">
@@ -230,7 +210,7 @@ class App extends Component {
                           progressbarLeft={this.state.progressbarLeft}/>
         </div>
         <div className="button-container">
-          <button className="button-container__button button-container__button--stop">STOP</button>
+          <button className="button-container__button button-container__button--stop" onClick={this.clickHandler}>STOP</button>
         </div>
         <div className="explanation">
           <p className="explanation__question">What is Pomodoro Technique?</p>
