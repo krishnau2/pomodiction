@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CountDownTimer from './timer';
 import PomodoroBlock from './pomodoro-block';
 import Block from './block';
-import logo from './logo.png';
+import DesktopNotification from './desktop-notification';
 import './App.css';
 
 class App extends Component {
@@ -25,7 +25,7 @@ class App extends Component {
 
     this.state = {duration: this.pomodoroDuration,
                   status: 'initial',
-                  completedBlock: 0,
+                  completedBlock: 1,
                   timerLeft: this.baseLeft,
                   timerStartingPosition: 0,
                   progressbarLeft: 0,
@@ -119,8 +119,14 @@ class App extends Component {
     // Call Desktop Notification here.
     clearInterval(this.intervalId);
     this.setState({completedBlock: this.state.completedBlock + 1})
+    this.sendNotification();
     let newDuration = this.currentDuration();
     this.intervalId = this.startTimer(newDuration);
+  }
+
+  sendNotification() {
+    let notification = new DesktopNotification(this.state.completedBlock);
+    notification.notify();
   }
 
   timerStartingPosition() {
