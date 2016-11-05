@@ -28,7 +28,7 @@ class Block{
         type = 'break--long';
         break;
       default:
-        type = type;
+        type = '';
         break;
     }
     return type;
