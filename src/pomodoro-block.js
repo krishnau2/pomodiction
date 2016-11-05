@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Block from './block';
 
 class PomodoroBlock extends Component{
-  constructor(props) {
-    super(props);
-  }
 
   blockType(blockNumber) {
     let block = new Block();
