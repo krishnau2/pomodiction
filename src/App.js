@@ -28,7 +28,8 @@ class App extends Component {
                   completedBlock: 0,
                   timerLeft: this.baseLeft,
                   timerStartingPosition: 0,
-                  progressbarLeft: 0
+                  progressbarLeft: 0,
+                  buttonCaption: 'START'
                 };
 
     this.intervalId = null;
@@ -53,7 +54,7 @@ class App extends Component {
       this.intervalId = this.startTimer(this.state.duration);
     }else{
       clearInterval(this.intervalId);
-      this.setState({status: 'paused'});
+      this.setState({status: 'paused', buttonCaption: 'START'});
     }
     console.log(this.intervalId);
   }
@@ -76,9 +77,7 @@ class App extends Component {
   }
 
   startTimer(duration) {
-    // var timer = duration, minutes, seconds, currentTime;
     let initialDuration = duration;
-    let minutes, seconds, displayTime;
     let Intervald = setInterval(function () {
 
       this.updateComponents({displayTime: this.displayTime(duration),
@@ -145,7 +144,8 @@ class App extends Component {
                   displayTime: params.displayTime,
                   timerLeft: timerLeftValue,
                   progressbarLeft: progressbarWidthValue,
-                  timerStartingPosition: timerPosition});
+                  timerStartingPosition: timerPosition,
+                  buttonCaption: 'PAUSE'});
   }
 
   calculateTimerMovement(params) {
@@ -168,6 +168,14 @@ class App extends Component {
       return(this.pomodoroRatio * (timeDiff/10));
     }else{
       return this.state.progressbarLeft;
+    }
+  }
+
+  buttonCssClass() {
+    if(this.state.status === 'running'){
+      return 'button-container__button button-container__button--red';
+    }else{
+      return 'button-container__button button-container__button--green'
     }
   }
 
@@ -210,7 +218,7 @@ class App extends Component {
                           progressbarLeft={this.state.progressbarLeft}/>
         </div>
         <div className="button-container">
-          <button className="button-container__button button-container__button--stop" onClick={this.clickHandler}>STOP</button>
+          <button className={this.buttonCssClass()} onClick={this.clickHandler}>{this.state.buttonCaption}</button>
         </div>
         <div className="explanation">
           <p className="explanation__question">What is Pomodoro Technique?</p>

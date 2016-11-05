@@ -57,7 +57,7 @@
 .progress-indicator{
   width: 2px;
   height: 100px;
-  align-self: flex-end;
+  /*align-self: flex-end;*/
 }
 .progress-indicator-pomodoro{
   background-color: #1D914E;
@@ -148,9 +148,7 @@
   border: none;
   color: white;
   padding: 10px 0;
-  /*text-align: center;*/
-  /*text-decoration: none;*/
-  /*display: inline-block;*/
+  outline: 0;
   font-size: 20px;
   cursor: pointer;
   font-family: 'Source Sans Pro', sans-serif;
@@ -160,10 +158,10 @@
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
 }
-.button-container__button--start{
+.button-container__button--green{
   background-color: #1D914E;
 }
-.button-container__button--stop{
+.button-container__button--red{
   background-color: #E74C3C;
 }
 
@@ -188,13 +186,6 @@
 }
 .display-none{
   display: none;
-}
-
-.kk{
-  display: flex;
-  justify-content: space-between;
-  min-width: 92px;
-  max-width: 108px;
 }
 
 
