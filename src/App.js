@@ -21,7 +21,7 @@ class App extends Component {
 
     this.pomodoroRatio = 0.466;
     this.shortBreakRatio = 0.5;
-    this.longBreakRation = 0.333;
+    this.longBreakRatio = 0.333;
 
     this.state = {duration: this.pomodoroDuration,
                   status: 'initial',
@@ -40,12 +40,12 @@ class App extends Component {
   componentWillMount() {
     let timerStartingPosition = this.timerStartingPosition();
     let timerLeft = this.baseLeft + timerStartingPosition;
-    let nextDuration = this.nextDuration();
+    let currentDuration = this.currentDuration();
 
     this.setState({timerLeft: timerLeft,
                   timerStartingPosition: timerStartingPosition,
-                  duration: nextDuration,
-                  displayTime: this.displayTime(nextDuration)
+                  duration: currentDuration,
+                  displayTime: this.displayTime(currentDuration)
                 })
   }
 
@@ -77,7 +77,7 @@ class App extends Component {
   }
 
   startTimer(duration) {
-    let initialDuration = duration;
+    let initialDuration = this.currentDuration();
     let Intervald = setInterval(function () {
 
       this.updateComponents({displayTime: this.displayTime(duration),
@@ -92,9 +92,9 @@ class App extends Component {
     return Intervald;
   }
 
-  nextDuration() {
-    // let block = new Block();
+  currentDuration() {
     let blockType = this.blockType(this.state.completedBlock+1);
+
     if( blockType === 'pomodoro'){
       return this.pomodoroDuration;
     }else if( blockType === 'break--short'){
@@ -104,11 +104,22 @@ class App extends Component {
     }
   }
 
+  currentProgressRatio() {
+   let blockType = this.blockType(this.state.completedBlock+1);
+    if( blockType === 'pomodoro'){
+      return this.pomodoroRatio;
+    }else if( blockType === 'break--short'){
+      return this.shortBreakRatio;
+    }else if( blockType === 'break--long'){
+      return this.longBreakRatio;
+    } 
+  }
+
   timerCompleted() {
     // Call Desktop Notification here.
     clearInterval(this.intervalId);
     this.setState({completedBlock: this.state.completedBlock + 1})
-    let newDuration = this.nextDuration();
+    let newDuration = this.currentDuration();
     this.intervalId = this.startTimer(newDuration);
   }
 
@@ -153,7 +164,7 @@ class App extends Component {
     // Update on every 10 second
     // Need to consider completed blocks and its padding.
     if(timeDiff%10 === 0){
-      return(this.baseLeft + this.state.timerStartingPosition + (this.pomodoroRatio * (timeDiff/10)));
+      return(this.baseLeft + this.state.timerStartingPosition + (this.currentProgressRatio() * (timeDiff/10)));
     }else{
       return this.state.timerLeft;
     }
@@ -165,7 +176,7 @@ class App extends Component {
     // Update on every 10 second
     // Need to consider completed blocks and its padding.
     if(timeDiff%10 === 0){
-      return(this.pomodoroRatio * (timeDiff/10));
+      return(this.currentProgressRatio() * (timeDiff/10));
     }else{
       return this.state.progressbarLeft;
     }
