@@ -25,7 +25,7 @@ class App extends Component {
 
     this.state = {duration: this.pomodoroDuration,
                   status: 'initial',
-                  completedBlock: 0,
+                  completedBlock: 1,
                   timerLeft: this.baseLeft,
                   timerStartingPosition: 0,
                   progressbarLeft: 0,
