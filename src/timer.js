@@ -7,13 +7,13 @@ class CountDownTimer extends Component{
     this.state = {displayTime: this.props.displayTime };
   }
 
-  currentBlock() {
+  runningBlock() {
     let block = new Block();
-    return(block.blockType(this.props.completedBlock + 1));
+    return(block.blockType(this.props.runningBlockNumber));
   }
 
   timerCssClass() {
-    if(this.currentBlock() === 'pomodoro'){
+    if(this.runningBlock() === 'pomodoro'){
       return 'timer timer-pomodoro';
     }else{
       return 'timer timer-break';
@@ -21,7 +21,7 @@ class CountDownTimer extends Component{
   }
 
   progressIndicatorCssClass(){
-   if(this.currentBlock() === 'pomodoro'){
+   if(this.runningBlock() === 'pomodoro'){
       return 'progress-indicator progress-indicator-pomodoro';
     }else{
       return 'progress-indicator progress-indicator-break';
