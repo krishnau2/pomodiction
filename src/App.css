@@ -184,6 +184,16 @@
   margin-top: 15px;
   font-family: 'Georgia', sans-serif;
 }
+.credits{
+  color: #808080;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+.credits a {
+  color: #808080;
+}
 .display-none{
   display: none;
 }
